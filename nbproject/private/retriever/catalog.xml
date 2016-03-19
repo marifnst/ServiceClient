@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://cxf.apache.org/schemas/core.xsd" uri="cxf.apache.org/schemas/core.xsd"/>
+    <system systemId="http://www.springframework.org/schema/beans/spring-beans.xsd" uri="www.springframework.org/schema/beans/spring-beans.xsd"/>
+    <system systemId="http://cxf.apache.org/schemas/configuration/http-conf.xsd" uri="cxf.apache.org/schemas/configuration/http-conf.xsd"/>
+    <system systemId="http://schemas.xmlsoap.org/wsdl/2003-02-11.xsd" uri="schemas.xmlsoap.org/wsdl/2003-02-11.xsd"/>
+    <system systemId="http://cxf.apache.org/schemas/configuration/security.xsd" uri="cxf.apache.org/schemas/configuration/security.xsd"/>
+    <system systemId="http://cxf.apache.org/schemas/configuration/cxf-beans.xsd" uri="cxf.apache.org/schemas/configuration/cxf-beans.xsd"/>
+    <system systemId="http://cxf.apache.org/schemas/wsdl/http-conf.xsd" uri="cxf.apache.org/schemas/wsdl/http-conf.xsd"/>
+    <system systemId="http://cxf.apache.org/schemas/configuration/parameterized-types.xsd" uri="cxf.apache.org/schemas/configuration/parameterized-types.xsd"/>
+    <system systemId="http://cxf.apache.org/ws/addressing" uri="cxf.apache.org/schemas/ws-addr-conf.xsd"/>
+</catalog>
