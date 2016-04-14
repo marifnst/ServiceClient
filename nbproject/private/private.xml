@@ -3,11 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/nitip/kuliah/ui/4%20semester%204/LAW/bahan%20paper/source%20code/ServiceClient.git/src/java/com/client/servlets/ServletIndex.java</file>
-            <file>file:/D:/nitip/kuliah/ui/4%20semester%204/LAW/bahan%20paper/source%20code/ServiceClient.git/src/java/com/client/util/UtilVariables.java</file>
-            <file>file:/D:/nitip/kuliah/ui/4%20semester%204/LAW/bahan%20paper/source%20code/ServiceClient.git/src/java/com/client/util/UtilBuku.java</file>
+            <file>file:/D:/nitip/kuliah/ui/4%20semester%204/LAW/bahan%20paper/source%20code/ServiceClient.git/src/java/com/client/servlets/ServletBuku.java</file>
+            <file>file:/D:/nitip/kuliah/ui/4%20semester%204/LAW/bahan%20paper/source%20code/ServiceClient.git/web/dashboard.jsp</file>
+            <file>file:/D:/nitip/kuliah/ui/4%20semester%204/LAW/bahan%20paper/source%20code/ServiceClient.git/src/java/com/client/util/UtilKategori.java</file>
             <file>file:/D:/nitip/kuliah/ui/4%20semester%204/LAW/bahan%20paper/source%20code/ServiceClient.git/web/index.jsp</file>
             <file>file:/D:/nitip/kuliah/ui/4%20semester%204/LAW/bahan%20paper/source%20code/ServiceClient.git/src/java/com/client/entities/TblBuku.java</file>
+            <file>file:/D:/nitip/kuliah/ui/4%20semester%204/LAW/bahan%20paper/source%20code/ServiceClient.git/src/java/com/client/servlets/ServletAdminBuku.java</file>
+            <file>file:/D:/nitip/kuliah/ui/4%20semester%204/LAW/bahan%20paper/source%20code/ServiceClient.git/src/java/com/client/servlets/ServletAdminKategori.java</file>
         </group>
     </open-files>
 </project-private>

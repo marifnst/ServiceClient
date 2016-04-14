@@ -11,5 +11,6 @@ package com.client.util;
  */
 public class UtilVariables {
     public static int TOTAL_SHOW_DATA = 4;
+    public static int TOTAL_SHOW_DATA_NEW = 3;
     public static int TOTAL_SHOW_BEST_SELLER = 10;
 }

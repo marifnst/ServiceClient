@@ -1,3 +1,4 @@
+<%@page import="com.client.entities.TblNews"%>
 <%@page import="com.client.entities.TblBuku"%>
 <%@page import="java.util.List"%>
 <%@page import="com.client.entities.TblKategori"%>
@@ -12,12 +13,24 @@
 
         <script type="text/javascript">
             $(document).ready(function () {
-                $('#linkHome').click(function () {
+                $('.linkHome').click(function () {
                     loadHomeContent(1);
                 });
 
-                $('#linkSearch').click(function () {
+                $('.linkSearch').click(function () {
                     loadSearchContent();
+                });
+
+                $('.linkContact').click(function () {
+                    alert('contact');
+                });
+
+                $('.linkAbout').click(function () {
+                    alert('about');
+                });
+
+                $('#linkShowSpecialOffer').click(function () {
+                    alert('special offer');
                 });
 
                 loadHomeContent(1);
@@ -63,7 +76,7 @@
                             finalContent += '<p>' + elementt.deskripsi + '</p>';
                             finalContent += '<h3>' + elementt.harga.toLocaleString('en-US', {style: 'currency', currency: 'IDR'}) + '</h3>';
                             finalContent += '<div class="buy_now_button"><a href="subpage.html">Buy Now</a></div>';
-                            finalContent += '<div class="detail_button"><a href="subpage.html">Detail</a></div>';
+                            finalContent += '<div class="detail_button"><a href="#" onClick="loadDetailContent(' + elementt.id + ')">Detail</a></div>';
                             finalContent += '</div>';
                             finalContent += '<div class="cleaner">&nbsp;</div>';
                             finalContent += '</div>';
@@ -133,8 +146,55 @@
                 });
             }
 
-            function loadSearchContent() {
-                $('#main_content').load('<%=request.getContextPath()%>/content_header_search.jsp');
+            function loadSearchContent(page) {
+                var finalContent = '<select id="searchKey">';
+                finalContent += '<option>Nama</option>';
+                finalContent += '<option>Deskripsi</option>';
+                finalContent += '<option>Detail Deskripsi</option>';
+                finalContent += '<option>Penulis</option>';
+                finalContent += '</select> ';
+                finalContent += ' <input type="text" id="keySearchInput" />';
+                finalContent += ' <a href="#" id="linkSearchMenu">Search</a>';
+//                $('#main_content').load('<%=request.getContextPath()%>/content_header_search.jsp');
+                $('#main_content').html(finalContent);
+                $('#linkSearchMenu').click(function () {
+                    alert('Search Link ' + $('#searchKey').val());
+                    $('#main_content').html('');
+                    $.ajax({
+                        type: 'post',
+                        url: '<%=request.getContextPath()%>/ServletBuku',
+                        data: {view: 'VIEW_BY_FILTER', page:page, filter:$('#searchKey').val(), key:$('#keySearchInput').val() },
+                        success: function (data) {
+                            
+                        }
+                    });
+                });
+            }
+
+            function loadDetailContent(id) {
+                $('#main_content').html('');
+                $.ajax({
+                    type: 'post',
+                    url: '<%=request.getContextPath()%>/ServletBuku',
+                    data: {view: 'DETAIL', id: id},
+                    success: function (data) {
+                        var finalContent = '';
+//                        $.each(data, function(index, element){
+                        finalContent += '<h1>' + data.nama + ' <span>(by ' + data.penulis + ')</span></h1>';
+                        finalContent += '<div class="image_panel"><img src="images/templatemo_image_02.jpg" alt="CSS Template" width="100" height="150" /></div>';
+                        finalContent += '<h2>' + data.deskripsi + '</h2>';
+                        finalContent += '<ul>';
+                        finalContent += '<li>By Deke <a href="#">McClelland</a></li>';
+                        finalContent += '<li>' + data.waktuTerbit + '</li>';
+                        finalContent += '<li>Pages: ' + data.jumlahHalaman + '</li>';
+                        finalContent += '<li>ISBN 10: ' + data.isbn10 + ' | ISBN 13: ' + data.isbn13 + '</li>';
+                        finalContent += '</ul>';
+                        finalContent += data.detailDeskripsi;
+                        finalContent += '<div class="cleaner_with_height">&nbsp;</div>';
+//                        });
+                        $('#main_content').html(finalContent);
+                    }
+                });
             }
         </script>
     </head>
@@ -143,30 +203,41 @@
         <div id="templatemo_container">
             <div id="templatemo_menu">
                 <ul>
-                    <li><a id='linkHome' href="#" class="current">Home</a></li>
-                    <li><a id='linkAbout' href="#">About</a></li> 
-                    <li><a id='linkSearch' href="#">Search</a></li>
-                    <li><a href="subpage.html">New Releases</a></li>  
-                    <li><a href="#">Contact</a></li>
+                    <li><a class='linkHome' href="#" class="current">Home</a></li>
+                    <li><a class='linkAbout' href="#">About</a></li> 
+                    <li><a class='linkSearch' href="#">Search</a></li>
+                    <li><a class='linkContact' href="#">Contact</a></li>
                 </ul>
             </div> <!-- end of menu -->
 
             <div id="templatemo_header">
                 <div id="templatemo_special_offers">
                     <p>
-                        <span>25%</span> discounts for
-                        purchase over $80
+                        <%
+                            TblNews specialOffer = (TblNews) request.getAttribute("specialOffer");
+                            out.println(specialOffer.getDescription());
+                        %>
+                        <!--                        <span>25%</span> discounts for
+                                                purchase over $80-->
                     </p>
-                    <a href="subpage.html" style="margin-left: 50px;">Read more...</a>
+                    <a href="#" id='linkShowSpecialOffer' style="margin-left: 50px;">Read more...</a>
                 </div>
 
                 <div id="templatemo_new_books">
                     <ul>
-                        <li>Suspen disse</li>
-                        <li>Maece nas metus</li>
-                        <li>In sed risus ac feli</li>
+                        <%
+                            List<TblBuku> newBooks = (List<TblBuku>) request.getAttribute("newBooks");
+                            for (TblBuku newBook : newBooks) {
+                                out.println("<li>");
+                                out.println("<a href='#' onClick='loadDetailContent(" + newBook.getId() + ")'>" + newBook.getNamaBuku() + "</a>");
+                                out.println("</li>");
+                            }
+                        %>
+                        <!--                        <li>Suspen disse</li>
+                                                <li>Maece nas metus</li>
+                                                <li>In sed risus ac feli</li>-->
                     </ul>
-                    <a href="subpage.html" style="margin-left: 50px;">Read more...</a>
+                    <!--                    <a href="subpage.html" style="margin-left: 50px;">Read more...</a>-->
                 </div>
             </div> <!-- end of header -->
 
@@ -193,7 +264,7 @@
                                 List<TblBuku> bestSellers = (List<TblBuku>) request.getAttribute("bestSeller");
                                 for (TblBuku bs : bestSellers) {
                                     out.println("<li>");
-                                    out.println("<a href='#'>" + bs.getNamaBuku() + "</a>");
+                                    out.println("<a href='#' onClick='loadDetailContent(" + bs.getId() + ")'>" + bs.getNamaBuku() + "</a>");
                                     out.println("</li>");
                                 }
                             %>
@@ -215,12 +286,11 @@
             </div> <!-- end of content -->
 
             <div id="templatemo_footer">
-                <a href="<%=request.getContextPath()%>">Home</a> | 
-                <a href="<%=request.getContextPath()%>/subpage.html">Search</a> | 
-                <a href="subpage.html">Books</a> | 
-                <a href="#">New Releases</a> | 
-                <a href="#">FAQs</a> | <a href="#">Contact Us</a><br />
-                Copyright © 2024 <a href="#"><strong>Your Company Name</strong></a> 
+                <a href="#" class='linkHome'>Home</a> | 
+                <a href="#" class='linkAbout'>About</a> | 
+                <a href="#" class='linkSearch'>Search</a> | 
+                <a href="#" class='linkContact'>Contact</a><br />
+                Copyright © 2024 <a href="#"><strong>E Commerce - LAW</strong></a> 
             </div> 
         </div>
     </body>

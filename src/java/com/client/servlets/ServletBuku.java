@@ -9,6 +9,7 @@ import com.client.entities.TblBuku;
 import com.client.util.UtilBuku;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,17 +39,41 @@ public class ServletBuku extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("application/json");
         List<TblBuku> bukus = new ArrayList<>();
+        String viewType = "VIEW_BY_CATEGORY";
 
         if (request.getParameter("view") == null) {
             String page = request.getParameter("page");
             bukus = UtilBuku.getInstance().getAllBuku(page);
         } else if (request.getParameter("view") != null) {
-            String page = request.getParameter("page");
-            String id = request.getParameter("id");
-            bukus = UtilBuku.getInstance().getAllBukuByCategory(page, id);
+            if (request.getParameter("view").equalsIgnoreCase("VIEW_BY_CATEGORY")) {
+                String page = request.getParameter("page");
+                String id = request.getParameter("id");
+                bukus = UtilBuku.getInstance().getAllBukuByCategory(page, id);
+            } else if (request.getParameter("view").equalsIgnoreCase("DETAIL")) {
+                String id = request.getParameter("id");
+                bukus = UtilBuku.getInstance().getBukuById(id);
+                viewType = request.getParameter("view");
+            } else if (request.getParameter("view").equalsIgnoreCase("VIEW_BY_FILTER")) {
+                String page = request.getParameter("page");
+                String key = request.getParameter("key");
+                String column = "";
+
+                if (request.getParameter("filter").equalsIgnoreCase("Nama")) {
+                    column = "namaBuku";
+                } else if (request.getParameter("filter").equalsIgnoreCase("Deskripsi")) {
+                    column = "shortDescription";
+                } else if (request.getParameter("filter").equalsIgnoreCase("Detail Deskripsi")) {
+                    column = "detailDescription";
+                } else if (request.getParameter("filter").equalsIgnoreCase("Penulis")) {
+                    column = "penulis";
+                }
+
+                bukus = UtilBuku.getInstance().getAllBukuByFilter(column, key, page);
+            }
         }
 
         List<Map<String, Object>> jsonBuku = new ArrayList<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("MMMM yyyy");
         for (TblBuku tbuku : bukus) {
             Map<String, Object> temp = new HashMap<>();
             temp.put("id", tbuku.getId());
@@ -57,12 +82,21 @@ public class ServletBuku extends HttpServlet {
             temp.put("penulis", tbuku.getPenulis());
             temp.put("deskripsi", tbuku.getShortDescription());
             temp.put("imagePath", tbuku.getImagePath());
+            temp.put("detailDeskripsi", tbuku.getDetailDescription());
+            temp.put("jumlahHalaman", tbuku.getJumlahHalaman());
+            temp.put("waktuTerbit", sdf.format(tbuku.getWaktuTerbit()));
+            temp.put("isbn10", tbuku.getIsbn10());
+            temp.put("isbn13", tbuku.getIsbn13());
             jsonBuku.add(temp);
         }
 
-        Map<String, Object> json = new HashMap<>();
-        json.put("buku", jsonBuku);
-        response.getWriter().println(new JSONObject(json));
+        if (!viewType.equalsIgnoreCase("DETAIL")) {
+            Map<String, Object> json = new HashMap<>();
+            json.put("buku", jsonBuku);
+            response.getWriter().println(new JSONObject(json));
+        } else {
+            response.getWriter().println(new JSONObject(jsonBuku.get(0)));
+        }
         response.getWriter().flush();
     }
 

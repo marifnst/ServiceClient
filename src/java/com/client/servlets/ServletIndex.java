@@ -7,20 +7,11 @@ package com.client.servlets;
 
 import com.client.entities.TblBuku;
 import com.client.entities.TblKategori;
+import com.client.entities.TblNews;
 import com.client.util.UtilBuku;
-import com.client.util.UtilDatabase;
 import com.client.util.UtilKategori;
-import com.client.util.UtilVariables;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -45,8 +36,12 @@ public class ServletIndex extends HttpServlet {
             throws ServletException, IOException {
             List<TblKategori> datas = UtilKategori.getInstance().getAllKategori();
             List<TblBuku> bestSeller = UtilBuku.getInstance().getBestSeller();
+            List<TblBuku> newBooks = UtilBuku.getInstance().getAllBukuNew();
+            TblNews specialOffer = UtilBuku.getInstance().getSpecialOffer();
             request.setAttribute("kategori", datas);
             request.setAttribute("bestSeller", bestSeller);
+            request.setAttribute("newBooks", newBooks);
+            request.setAttribute("specialOffer", specialOffer);
             request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 

@@ -42,7 +42,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "TblBuku.findByJumlahHalaman", query = "SELECT t FROM TblBuku t WHERE t.jumlahHalaman = :jumlahHalaman"),
     @NamedQuery(name = "TblBuku.findByIsNewBook", query = "SELECT t FROM TblBuku t WHERE t.isNewBook = :isNewBook"),
     @NamedQuery(name = "TblBuku.findByIdKategori", query = "SELECT t FROM TblBuku t WHERE t.idKategori = :idKategori"),
-    @NamedQuery(name = "TblBuku.findByCreatedDate", query = "SELECT t FROM TblBuku t WHERE t.createdDate = :createdDate")})
+    @NamedQuery(name = "TblBuku.findByCreatedDate", query = "SELECT t FROM TblBuku t WHERE t.createdDate = :createdDate"),
+    @NamedQuery(name = "TblBuku.findByIsbn10", query = "SELECT t FROM TblBuku t WHERE t.isbn10 = :isbn10"),
+    @NamedQuery(name = "TblBuku.findByIsbn13", query = "SELECT t FROM TblBuku t WHERE t.isbn13 = :isbn13")})
 public class TblBuku implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -84,6 +86,12 @@ public class TblBuku implements Serializable {
     @Column(name = "CREATED_DATE")
     @Temporal(TemporalType.DATE)
     private Date createdDate;
+    @Basic(optional = false)
+    @Column(name = "ISBN_10")
+    private String isbn10;
+    @Basic(optional = false)
+    @Column(name = "ISBN_13")
+    private String isbn13;
 
     public TblBuku() {
     }
@@ -92,9 +100,11 @@ public class TblBuku implements Serializable {
         this.id = id;
     }
 
-    public TblBuku(Integer id, Date createdDate) {
+    public TblBuku(Integer id, Date createdDate, String isbn10, String isbn13) {
         this.id = id;
         this.createdDate = createdDate;
+        this.isbn10 = isbn10;
+        this.isbn13 = isbn13;
     }
 
     public Integer getId() {
@@ -215,6 +225,22 @@ public class TblBuku implements Serializable {
 
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public String getIsbn10() {
+        return isbn10;
+    }
+
+    public void setIsbn10(String isbn10) {
+        this.isbn10 = isbn10;
+    }
+
+    public String getIsbn13() {
+        return isbn13;
+    }
+
+    public void setIsbn13(String isbn13) {
+        this.isbn13 = isbn13;
     }
 
     @Override
