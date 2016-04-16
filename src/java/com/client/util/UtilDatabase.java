@@ -61,7 +61,7 @@ public class UtilDatabase {
                 }
                 data = br.readLine();
             }
-
+            
             emf = Persistence.createEntityManagerFactory(persistenceUnitName, persistenceMap);
             em = emf.createEntityManager();
         } catch (FileNotFoundException ex) {

@@ -7,6 +7,7 @@ package com.client.util;
 
 import com.client.entities.TblKategori;
 import com.client.entities.TblNews;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -45,6 +46,51 @@ public class UtilNews {
         TblNews newsAfter = em.merge(news);
         em.remove(newsAfter);
         q.commit();
+        UtilDatabase.getInstance().getEntityManager().close();
+        result = 1;
+        return result;
+    }
+
+    public int insertNews(String description, String detailDescription) {
+        int result = 0;
+        UtilDatabase.getInstance().openConnection();
+        TblNews news = new TblNews();
+
+        news.setDescription(description);
+        news.setDetailDescription(detailDescription);
+        news.setCreatedDate(new Date());
+
+        EntityManager em = UtilDatabase.getInstance().getEntityManager();
+        EntityTransaction q = em.getTransaction();
+        q.begin();
+        em.persist(news);
+        q.commit();
+        UtilDatabase.getInstance().getEntityManager().close();
+        result = 1;
+        return result;
+    }
+
+    public TblNews getNewsById(String id) {
+        UtilDatabase.getInstance().openConnection();
+        EntityManager em = UtilDatabase.getInstance().getEntityManager();
+        EntityTransaction et = em.getTransaction();
+        et.begin();
+        TblNews result = em.find(TblNews.class, Integer.parseInt(id));
+        et.commit();
+        UtilDatabase.getInstance().getEntityManager().close();
+        return result;
+    }
+
+    public int editNews(String id, String description, String detailDescription) {
+        int result = 0;
+        UtilDatabase.getInstance().openConnection();
+        EntityManager em = UtilDatabase.getInstance().getEntityManager();
+        EntityTransaction et = em.getTransaction();
+        et.begin();
+        TblNews news = em.find(TblNews.class, Integer.parseInt(id));
+        news.setDescription(description);
+        news.setDetailDescription(detailDescription);
+        et.commit();
         UtilDatabase.getInstance().getEntityManager().close();
         result = 1;
         return result;

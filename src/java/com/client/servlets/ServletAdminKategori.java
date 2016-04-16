@@ -52,8 +52,8 @@ public class ServletAdminKategori extends HttpServlet {
 
             for (TblKategori tkategori : kategori) {
                 List<String> tempp = new ArrayList<>();
-                String action = "<a href='#'>Add</a>";
-                action += " <a href='#'>Edit</a>";
+                String action = "<a href='#' onclick='showKategoriDialog()'>Add</a>";
+                action += " <a href='#' onclick='showKategoriEditDialog(" + tkategori.getId().toString() + ")'>Edit</a>";
                 action += " <a href='#' onclick='deleteKategori(" + tkategori.getId() + ")'>Delete</a>";
                 tempp.add(action);
                 tempp.add(tkategori.getId().toString());
@@ -65,6 +65,32 @@ public class ServletAdminKategori extends HttpServlet {
             //json.put("buku", jsonBuku);
             json.put("data", jsonKategoriDataTable);
             response.getWriter().println(new JSONObject(json));
+        } else if (parameter.equals("INSERT")) {
+            String id = request.getParameter("ID");
+            String deskripsi = request.getParameter("DESKRIPSI");
+            int result = UtilKategori.getInstance().insertKategori(id, deskripsi);
+            if (result == 0) {
+                response.getWriter().println("INSERT FAILED");
+            } else {
+                response.getWriter().println("INSERT SUCCESS");
+            }
+        } else if (parameter.equals("EDIT_SHOW")) {
+            String id = request.getParameter("ID");
+            TblKategori kategori = UtilKategori.getInstance().getKategoriById(id);
+            Map<String, Object> json = new HashMap<>();
+            //json.put("buku", jsonBuku);
+            json.put("ID", String.valueOf(kategori.getId()));
+            json.put("DESKRIPSI", kategori.getDeskripsi());
+            response.getWriter().println(new JSONObject(json));
+        } else if (parameter.equals("EDIT")) {
+            String id = request.getParameter("ID");
+            String deskripsi = request.getParameter("DESKRIPSI");
+            int result = UtilKategori.getInstance().editKategori(id, deskripsi);
+            if (result == 0) {
+                response.getWriter().println("EDIT FAILED");
+            } else {
+                response.getWriter().println("EDIT SUCCESS");
+            }
         } else if (parameter.equals("DELETE")) {
             String idDelete = request.getParameter("ID");
             int result = UtilKategori.getInstance().deleteKategori(Integer.parseInt(idDelete));
@@ -73,7 +99,6 @@ public class ServletAdminKategori extends HttpServlet {
             } else {
                 response.getWriter().println("DELETE SUCCESS");
             }
-
         }
     }
 

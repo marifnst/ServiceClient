@@ -52,7 +52,7 @@ public class ServletAdminBuku extends HttpServlet {
             for (TblBuku tbuku : bukus) {
 
                 List<String> tempp = new ArrayList<>();
-                String action = "<a href='#'>Add</a>";
+                String action = "<a href='#' onclick='showInsertDialog()'>Add</a>";
                 action += " <a href='#'>Edit</a>";
                 action += " <a href='#' onclick='deleteBuku(" + tbuku.getId() + ")'>Delete</a>";
                 tempp.add(action);
@@ -80,6 +80,15 @@ public class ServletAdminBuku extends HttpServlet {
             //json.put("buku", jsonBuku);
             json.put("data", jsonBukuDataTable);
             response.getWriter().println(new JSONObject(json));
+        } else if (parameter.equals("INSERT")) {
+            String idDelete = request.getParameter("ID");
+            int result = UtilBuku.getInstance().deleteBuku(Integer.parseInt(idDelete));
+            if (result == 0) {
+                response.getWriter().println("DELETE FAILED");
+            } else {
+                response.getWriter().println("DELETE SUCCESS");
+            }
+
         } else if (parameter.equals("DELETE")) {
             String idDelete = request.getParameter("ID");
             int result = UtilBuku.getInstance().deleteBuku(Integer.parseInt(idDelete));

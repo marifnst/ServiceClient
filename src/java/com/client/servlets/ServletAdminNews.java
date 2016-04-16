@@ -52,8 +52,8 @@ public class ServletAdminNews extends HttpServlet {
 
             for (TblNews tnews : news) {
                 List<String> tempp = new ArrayList<>();
-                String action = "<a href='#'>Add</a>";
-                action += " <a href='#'>Edit</a>";
+                String action = "<a href='#' onclick='showNewsDialog()'>Add</a>";
+                action += " <a href='#' onclick='showNewsEditDialog(" + tnews.getId().toString() + ")'>Edit</a>";
                 action += " <a href='#' onclick='deleteNews(" + tnews.getId() + ")'>Delete</a>";
                 tempp.add(action);
                 tempp.add(tnews.getId().toString());
@@ -68,6 +68,37 @@ public class ServletAdminNews extends HttpServlet {
             //json.put("buku", jsonBuku);
             json.put("data", jsonNewsDataTable);
             response.getWriter().println(new JSONObject(json));
+        } else if (parameter.equals("INSERT")) {
+            //String idDelete = request.getParameter("ID");
+            String description = request.getParameter("DESCRIPTION");
+            String detailDescription = request.getParameter("DETAIL_DESCRIPTION");
+            int result = UtilNews.getInstance().insertNews(description, detailDescription);
+            if (result == 0) {
+                response.getWriter().println("INSERT FAILED");
+            } else {
+                response.getWriter().println("INSERT SUCCESS");
+            }
+        } else if (parameter.equals("EDIT_SHOW")) {
+            String id = request.getParameter("ID");
+
+            TblNews result = UtilNews.getInstance().getNewsById(id);
+            Map<String, Object> json = new HashMap<>();
+            //json.put("buku", jsonBuku);
+            json.put("ID", String.valueOf(result.getId()));
+            json.put("DESCRIPTION", result.getDescription());
+            json.put("DETAIL_DESCRIPTION", result.getDetailDescription());
+            response.getWriter().println(new JSONObject(json));
+        } else if (parameter.equals("EDIT")) {
+            String id = request.getParameter("ID");
+            String description = request.getParameter("DESCRIPTION");
+            String detailDescription = request.getParameter("DETAIL_DESCRIPTION");
+
+            int result = UtilNews.getInstance().editNews(id, description, detailDescription);
+            if (result == 0) {
+                response.getWriter().println("UPDATE FAILED");
+            } else {
+                response.getWriter().println("UPDATE SUCCESS");
+            }
         } else if (parameter.equals("DELETE")) {
             String idDelete = request.getParameter("ID");
             int result = UtilNews.getInstance().deleteNews(Integer.parseInt(idDelete));
@@ -76,7 +107,6 @@ public class ServletAdminNews extends HttpServlet {
             } else {
                 response.getWriter().println("DELETE SUCCESS");
             }
-
         }
     }
 

@@ -26,6 +26,7 @@
 
         <!-- Custom styles for this template -->
         <link href="bs/dashboard.css" rel="stylesheet">
+        <link rel="stylesheet" href="jquery/jquery-ui.min.css">
 
         <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
         <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -35,14 +36,25 @@
         <script src="datatables/js/jquery.dataTables.min.js" type="text/javascript"></script>
         <script src="datatables/js/dataTables.bootstrap.min.js" type="text/javascript"></script>
 
+        <script src="jquery/jquery-ui.min.js"></script>
+
         <script type="text/javascript">
-//            $(document).ready(function () {
-//                $('#example').DataTable();
-//            });
+            $(document).ready(function () {
+                //$("#dialog").dialog();
+            });
+
+            function closeDialog() {
+
+                if ($('#dialog').is(':ui-dialog')) {
+                    //alert('close');
+                    $("#dialog").dialog('close');
+                }
+            }
 
             function showData() {
                 $('#main_admin_content').html('');
                 //$("#example").dataTable().fnDestroy();
+                closeDialog();
 
                 if ($.fn.DataTable.isDataTable('#example')) {
                     $("#example").dataTable().fnDestroy();
@@ -56,7 +68,7 @@
 
             function showDataKategori() {
                 $('#main_admin_content').html('');
-
+                closeDialog();
                 //$("#example").dataTable().fnDestroy();
                 if ($.fn.DataTable.isDataTable('#example')) {
                     $("#example").dataTable().fnDestroy();
@@ -70,6 +82,7 @@
 
             function showDataNews() {
                 $('#main_admin_content').html('');
+                closeDialog();
 
                 //$("#example").dataTable().fnDestroy();
                 if ($.fn.DataTable.isDataTable('#example')) {
@@ -139,6 +152,8 @@
                 $('#example').html(finalContent);
             }
 
+// ################################################################
+// DELETE
             function deleteBuku(id) {
                 $.ajax({
                     url: '<%=request.getContextPath()%>/ServletAdminBuku',
@@ -169,6 +184,160 @@
                 });
             }
 
+// ################################################################
+// INSERT
+
+            function showInsertDialog() {
+                //alert('insert');
+                //closeDialog();
+                var finalContent = '<br><table>';
+                finalContent += '<tr><td>ID</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="ID" aria-describedby="basic-addon1" id="input_ID"></div></td>';
+                finalContent += '<tr><td>NAMA BUKU</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="NAMA BUKU" aria-describedby="basic-addon1" id="input_NAMA BUKU"></div></td>';
+                finalContent += '<tr><td>SHORT DESCRIPTION</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="SHORT DESCRIPTION" aria-describedby="basic-addon1" id="input_SHORT DESCRIPTION"></div></td>';
+                finalContent += '<tr><td>DETAIL DESCRIPTION</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="DETAIL DESCRIPTION" aria-describedby="basic-addon1" id="input_DETAIL DESCRIPTION"></div></td>';
+                finalContent += '<tr><td>IMAGE PATH</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="IMAGE PATH" aria-describedby="basic-addon1" id="input_IMAGE PATH"></div></td>';
+                finalContent += '<tr><td>HARGA</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="HARGA" aria-describedby="basic-addon1" id="input_HARGA"></div></td>';
+                finalContent += '<tr><td>PENULIS</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="PENULIS" aria-describedby="basic-addon1" id="input_PENULIS"></div></td>';
+                finalContent += '<tr><td>WAKTU TERBIT</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="WAKTU TERBIT" aria-describedby="basic-addon1" id="input_WAKTU TERBIT"></div></td>';
+                finalContent += '<tr><td>STOK</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="STOK" aria-describedby="basic-addon1" id="input_STOK"></div></td>';
+                finalContent += '<tr><td>IS BEST SELLER</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="IS BEST SELLER" aria-describedby="basic-addon1" id="input_IS BEST SELLER"></div></td>';
+                finalContent += '<tr><td>IS SPECIAL OFFER</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="IS SPECIAL OFFER" aria-describedby="basic-addon1" id="input_IS SPECIAL OFFER"></div></td>';
+                finalContent += '<tr><td>JUMLAH HALAMAN</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="JUMLAH HALAMAN" aria-describedby="basic-addon1" id="input_JUMLAH HALAMAN"></div></td>';
+                finalContent += '<tr><td>IS NEW BOOK</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="IS NEW BOOK" aria-describedby="basic-addon1" id="input_IS NEW BOOK"></div></td>';
+                finalContent += '<tr><td>ID KATEGORI</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="ID KATEGORI" aria-describedby="basic-addon1" id="input_ID KATEGORI"></div></td>';
+                //finalContent += '<tr><td>CREATED DATE</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="CREATED DATE" aria-describedby="basic-addon1" id="input_CREATED DATE"></div></td>';
+                finalContent += '<tr><td>ISBN 10</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="ISBN 10" aria-describedby="basic-addon1" id="input_ISBN 10"></div></td>';
+                finalContent += '<tr><td>ISBN 13</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="ISBN 13" aria-describedby="basic-addon1" id="input_ISBN 13"></div></td>';
+
+                finalContent += '</table>';
+                finalContent += '<div class="btn-group" role="group" aria-label="..."><button type="button" class="btn btn-default" onclick="insertBukuProcess()">Submit</button></div>';
+                $("#dialog").html(finalContent).dialog({
+                    width: 'auto'
+                });
+
+//                $("#dialog").dialog();
+            }
+
+            function insertBukuProcess() {
+                alert('insert process');
+            }
+
+            function showKategoriDialog() {
+                //alert('insert');
+                closeDialog();
+                var finalContent = '<br><table>';
+                //finalContent += '<tr><td>ID</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="ID" aria-describedby="basic-addon1" id="input_ID"></div></td>';
+                finalContent += '<tr><td>DESKRIPSI</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="DESKRIPSI" aria-describedby="basic-addon1" id="input_DESKRIPSI"></div></td>';
+                finalContent += '</table>';
+                finalContent += '<div class="btn-group" role="group" aria-label="..."><button type="button" class="btn btn-default" onclick="insertKategoriProcess()">Submit</button></div>';
+                $("#dialog").html(finalContent).dialog({
+                    width: 'auto'
+                });
+
+//                $("#dialog").dialog();
+            }
+
+            function insertKategoriProcess() {
+                //alert('insert kat process');
+                $.ajax({
+                    url: '<%=request.getContextPath()%>/ServletAdminKategori',
+                    data: {"ACTION": "INSERT", "DESKRIPSI": $('#input_DESKRIPSI').val()}
+                }).done(function (data) {
+                    alert(data);
+                    closeDialog();
+                    showDataKategori();
+                });
+            }
+
+            function showNewsDialog() {
+                //alert('insert');
+                closeDialog();
+                var finalContent = '<br><table>';
+                //finalContent += '<tr><td>ID</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="ID" aria-describedby="basic-addon1" id="input_ID"></div></td>';
+                finalContent += '<tr><td>DESCRIPTION</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="DESCRIPTION" aria-describedby="basic-addon1" id="input_DESCRIPTION"></div></td>';
+                finalContent += '<tr><td>DETAIL_DESCRIPTION</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="DETAIL_DESCRIPTION" aria-describedby="basic-addon1" id="input_DETAIL_DESCRIPTION"></div></td>';
+
+                finalContent += '</table>';
+                finalContent += '<div class="btn-group" role="group" aria-label="..."><button type="button" class="btn btn-default" onclick="insertNewsProcess()">Submit</button></div>';
+                $("#dialog").html(finalContent).dialog({
+                    width: 'auto'
+                });
+            }
+
+            function insertNewsProcess() {
+                //alert('insert kat process');
+                $.ajax({
+                    url: '<%=request.getContextPath()%>/ServletAdminNews',
+                    data: {"ACTION": "INSERT", "DESCRIPTION": $('#input_DESCRIPTION').val(), "DETAIL_DESCRIPTION": $('#input_DETAIL_DESCRIPTION').val()}
+                }).done(function (data) {
+                    alert(data);
+                    closeDialog();
+                    showDataNews();
+                });
+            }
+
+// ################################################################
+// UPDATE
+            function showKategoriEditDialog(id) {
+                $.ajax({
+                    url: '<%=request.getContextPath()%>/ServletAdminKategori',
+                    data: {"ACTION": "EDIT_SHOW", "ID": id},
+                    dataType: "json"
+                }).done(function (data) {
+                    //alert(data);
+                    var finalContent = '<br><table>';
+                    //finalContent += '<tr><td>ID</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="ID" aria-describedby="basic-addon1" id="input_ID"></div></td>';
+                    finalContent += '<tr><td>DESKRIPSI</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="DESKRIPSI" aria-describedby="basic-addon1" id="input_DESKRIPSI" value=' + JSON.stringify(data.DESKRIPSI) + '></div></td>';
+                    finalContent += '</table>';
+                    finalContent += '<div class="btn-group" role="group" aria-label="..."><button type="button" class="btn btn-default" onclick="editKategoriNews(' + data.ID + ')">Submit</button></div>';
+                    $("#dialog").html(finalContent).dialog({
+                        width: 'auto'
+                    });
+                });
+            }
+
+            function editKategoriNews(id) {
+                //alert('SDSD');
+                $.ajax({
+                    url: '<%=request.getContextPath()%>/ServletAdminKategori',
+                    data: {"ACTION": "EDIT", "ID": id, "DESKRIPSI": $('#input_DESKRIPSI').val()}
+                }).done(function (data) {
+                    alert(data);
+                    closeDialog();
+                    showDataKategori();
+                });
+            }
+
+            function showNewsEditDialog(id) {
+                $.ajax({
+                    url: '<%=request.getContextPath()%>/ServletAdminNews',
+                    data: {"ACTION": "EDIT_SHOW", "ID": id},
+                    dataType: "json"
+                }).done(function (data) {
+                    alert(data);
+                    var finalContent = '<br><table>';
+                    //finalContent += '<tr><td>ID</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="ID" aria-describedby="basic-addon1" id="input_ID"></div></td>';
+                    finalContent += '<tr><td>DESCRIPTION</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="DESKRIPSI" aria-describedby="basic-addon1" id="input_DESCRIPTION" value=' + JSON.stringify(data.DESCRIPTION) + '></div></td>';
+                    finalContent += '<tr><td>DETAIL_DESCRIPTION</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="DESKRIPSI" aria-describedby="basic-addon1" id="input_DETAIL_DESCRIPTION" value=' + JSON.stringify(data.DETAIL_DESCRIPTION) + '></div></td>';
+                    finalContent += '</table>';
+                    finalContent += '<div class="btn-group" role="group" aria-label="..."><button type="button" class="btn btn-default" onclick="editNews(' + data.ID + ')">Submit</button></div>';
+                    $("#dialog").html(finalContent).dialog({
+                        width: 'auto'
+                    });
+                });
+            }
+
+            function editNews(id) {
+                //alert('SDSD');
+                $.ajax({
+                    url: '<%=request.getContextPath()%>/ServletAdminNews',
+                    data: {"ACTION": "EDIT", "ID": id, "DESCRIPTION": $('#input_DESCRIPTION').val(), "DETAIL_DESCRIPTION":$('#input_DETAIL_DESCRIPTION').val()}
+                }).done(function (data) {
+                    alert(data);
+                    closeDialog();
+                    showDataNews();
+                });
+            }
         </script>
     </head>
 
@@ -210,42 +379,12 @@
 
                     <div class="table-responsive">
                         <table id="example" class="table table-striped table-bordered">
-                            <!--                            <thead>
-                                                            <tr>
-                                                                <th>ID</th>
-                                                                <th>NAMA BUKU</th>
-                                                                <th>SHORT DESCRIPTION</th>
-                                                                <th>DETAIL DESCRIPTION</th>
-                                                                <th>IMAGE PATH</th>
-                                                                <th>HARGA</th>
-                                                                <th>PENULIS</th>
-                                                                <th>WAKTU TERBIT</th>
-                                                                <th>STOK</th>
-                                                                <th>IS BEST SELLER</th>
-                                                                <th>IS SPECIAL OFFER</th>
-                                                                <th>JUMLAH HALAMAN</th>
-                                                                <th>IS NEW BOOK</th>
-                                                                <th>ID KATEGORI</th>
-                                                                <th>CREATED DATE</th>
-                                                                <th>ISBN 10</th>
-                                                                <th>ISBN 13</th>
-                                                            </tr>
-                                                        </thead>-->
                         </table>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Bootstrap core JavaScript
-        ================================================== -->
-        <!-- Placed at the end of the document so the pages load faster -->
-        <!--        <script src="jquery/jquery-2.2.2.min.js"></script>-->
-        <!--<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>-->
-        <!--        <script src="bs/dist/js/bootstrap.min.js"></script>
-                 Just to make our placeholder images work. Don't actually copy the next line! 
-                <script src="bs/assets/js/vendor/holder.min.js"></script>
-                 IE10 viewport hack for Surface/desktop Windows 8 bug 
-                <script src="bs/assets/js/ie10-viewport-bug-workaround.js"></script>-->
+        <div id="dialog"></div>
     </body>
 </html>
