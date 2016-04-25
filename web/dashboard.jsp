@@ -53,6 +53,7 @@
 
             function showData() {
                 $('#main_admin_content').html('');
+                $('#main_page_header').html('Buku');
                 //$("#example").dataTable().fnDestroy();
                 closeDialog();
 
@@ -68,6 +69,7 @@
 
             function showDataKategori() {
                 $('#main_admin_content').html('');
+                $('#main_page_header').html('Kategori');
                 closeDialog();
                 //$("#example").dataTable().fnDestroy();
                 if ($.fn.DataTable.isDataTable('#example')) {
@@ -82,6 +84,7 @@
 
             function showDataNews() {
                 $('#main_admin_content').html('');
+                $('#main_page_header').html('News');
                 closeDialog();
 
                 //$("#example").dataTable().fnDestroy();
@@ -191,30 +194,31 @@
                 //alert('insert');
                 //closeDialog();
                 var finalContent = '<br><table>';
-                finalContent += '<tr><td>ID</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="ID" aria-describedby="basic-addon1" id="input_ID"></div></td>';
-                finalContent += '<tr><td>NAMA BUKU</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="NAMA BUKU" aria-describedby="basic-addon1" id="input_NAMA BUKU"></div></td>';
-                finalContent += '<tr><td>SHORT DESCRIPTION</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="SHORT DESCRIPTION" aria-describedby="basic-addon1" id="input_SHORT DESCRIPTION"></div></td>';
-                finalContent += '<tr><td>DETAIL DESCRIPTION</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="DETAIL DESCRIPTION" aria-describedby="basic-addon1" id="input_DETAIL DESCRIPTION"></div></td>';
-                finalContent += '<tr><td>IMAGE PATH</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="IMAGE PATH" aria-describedby="basic-addon1" id="input_IMAGE PATH"></div></td>';
+                //finalContent += '<tr><td>ID</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="ID" aria-describedby="basic-addon1" id="input_ID"></div></td>';
+                finalContent += '<tr><td>NAMA_BUKU</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="NAMA_BUKU" aria-describedby="basic-addon1" id="input_NAMA_BUKU"></div></td>';
+                finalContent += '<tr><td>SHORT_DESCRIPTION</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="SHORT_DESCRIPTION" aria-describedby="basic-addon1" id="input_SHORT_DESCRIPTION"></div></td>';
+                finalContent += '<tr><td>DETAIL_DESCRIPTION</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="DETAIL_DESCRIPTION" aria-describedby="basic-addon1" id="input_DETAIL_DESCRIPTION"></div></td>';
+                finalContent += '<tr><td>IMAGE_PATH</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="IMAGE_PATH" aria-describedby="basic-addon1" id="input_IMAGE_PATH"></div></td>';
                 finalContent += '<tr><td>HARGA</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="HARGA" aria-describedby="basic-addon1" id="input_HARGA"></div></td>';
                 finalContent += '<tr><td>PENULIS</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="PENULIS" aria-describedby="basic-addon1" id="input_PENULIS"></div></td>';
-                finalContent += '<tr><td>WAKTU TERBIT</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="WAKTU TERBIT" aria-describedby="basic-addon1" id="input_WAKTU TERBIT"></div></td>';
+                finalContent += '<tr><td>WAKTU_TERBIT</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="WAKTU_TERBIT" aria-describedby="basic-addon1" id="input_WAKTU_TERBIT"></div></td>';
                 finalContent += '<tr><td>STOK</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="STOK" aria-describedby="basic-addon1" id="input_STOK"></div></td>';
-                finalContent += '<tr><td>IS BEST SELLER</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="IS BEST SELLER" aria-describedby="basic-addon1" id="input_IS BEST SELLER"></div></td>';
-                finalContent += '<tr><td>IS SPECIAL OFFER</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="IS SPECIAL OFFER" aria-describedby="basic-addon1" id="input_IS SPECIAL OFFER"></div></td>';
-                finalContent += '<tr><td>JUMLAH HALAMAN</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="JUMLAH HALAMAN" aria-describedby="basic-addon1" id="input_JUMLAH HALAMAN"></div></td>';
-                finalContent += '<tr><td>IS NEW BOOK</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="IS NEW BOOK" aria-describedby="basic-addon1" id="input_IS NEW BOOK"></div></td>';
-                finalContent += '<tr><td>ID KATEGORI</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="ID KATEGORI" aria-describedby="basic-addon1" id="input_ID KATEGORI"></div></td>';
-                //finalContent += '<tr><td>CREATED DATE</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="CREATED DATE" aria-describedby="basic-addon1" id="input_CREATED DATE"></div></td>';
-                finalContent += '<tr><td>ISBN 10</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="ISBN 10" aria-describedby="basic-addon1" id="input_ISBN 10"></div></td>';
-                finalContent += '<tr><td>ISBN 13</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="ISBN 13" aria-describedby="basic-addon1" id="input_ISBN 13"></div></td>';
+                finalContent += '<tr><td>IS_BEST_SELLER</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="IS_BEST_SELLER" aria-describedby="basic-addon1" id="input_IS_BEST_SELLER"></div></td>';
+                finalContent += '<tr><td>IS_SPECIAL_OFFER</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="IS_SPECIAL_OFFER" aria-describedby="basic-addon1" id="input_IS_SPECIAL_OFFER"></div></td>';
+                finalContent += '<tr><td>JUMLAH_HALAMAN</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="JUMLAH_HALAMAN" aria-describedby="basic-addon1" id="input_JUMLAH_HALAMAN"></div></td>';
+                finalContent += '<tr><td>IS_NEW_BOOK</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="IS_NEW_BOOK" aria-describedby="basic-addon1" id="input_IS_NEW_BOOK"></div></td>';
+                finalContent += '<tr><td>ID_KATEGORI</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="ID_KATEGORI" aria-describedby="basic-addon1" id="input_ID_KATEGORI"></div></td>';
+                //finalContent += '<tr><td>CREATED_DATE</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="CREATED_DATE" aria-describedby="basic-addon1" id="input_CREATED_DATE"></div></td>';
+                finalContent += '<tr><td>ISBN_10</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="ISBN_10" aria-describedby="basic-addon1" id="input_ISBN_10"></div></td>';
+                finalContent += '<tr><td>ISBN_13</td><td><div class="input-group"><span class="input-group-addon" id="basic-addon1"></span><input type="text" class="form-control" placeholder="ISBN_13" aria-describedby="basic-addon1" id="input_ISBN_13"></div></td>';
+
 
                 finalContent += '</table>';
                 finalContent += '<div class="btn-group" role="group" aria-label="..."><button type="button" class="btn btn-default" onclick="insertBukuProcess()">Submit</button></div>';
                 $("#dialog").html(finalContent).dialog({
                     width: 'auto'
                 });
-
+                $("#input_WAKTU_TERBIT").datepicker();
 //                $("#dialog").dialog();
             }
 
@@ -331,7 +335,7 @@
                 //alert('SDSD');
                 $.ajax({
                     url: '<%=request.getContextPath()%>/ServletAdminNews',
-                    data: {"ACTION": "EDIT", "ID": id, "DESCRIPTION": $('#input_DESCRIPTION').val(), "DETAIL_DESCRIPTION":$('#input_DETAIL_DESCRIPTION').val()}
+                    data: {"ACTION": "EDIT", "ID": id, "DESCRIPTION": $('#input_DESCRIPTION').val(), "DETAIL_DESCRIPTION": $('#input_DETAIL_DESCRIPTION').val()}
                 }).done(function (data) {
                     alert(data);
                     closeDialog();
@@ -373,7 +377,7 @@
                     </ul>
                 </div>
                 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                    <h1 class="page-header">Buku</h1>
+                    <h1 class="page-header" id="main_page_header">Buku</h1>
 
                     <div id="main_admin_content"></div>
 
