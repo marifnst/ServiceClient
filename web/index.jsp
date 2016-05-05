@@ -12,6 +12,7 @@
         <script src="<%=request.getContextPath()%>/jquery/jquery-2.2.2.min.js" type="text/javascript"></script>
 
         <script type="text/javascript">
+            var idBuy = 0;
             $(document).ready(function () {
                 $('.linkHome').click(function () {
                     loadHomeContent(1);
@@ -22,11 +23,17 @@
                 });
 
                 $('.linkContact').click(function () {
-                    alert('contact');
+                    //alert('contact');
+                    $.get("contact.html", function (data) {
+                        $('#main_content').html(data);
+                    });
                 });
 
                 $('.linkAbout').click(function () {
-                    alert('about');
+                    //alert('about');
+                    $.get("about.html", function (data) {
+                        $('#main_content').html(data);
+                    });
                 });
 
                 $('#linkShowSpecialOffer').click(function () {
@@ -75,7 +82,7 @@
                             finalContent += '<div class="product_info">';
                             finalContent += '<p>' + elementt.deskripsi + '</p>';
                             finalContent += '<h3>' + elementt.harga.toLocaleString('en-US', {style: 'currency', currency: 'IDR'}) + '</h3>';
-                            finalContent += '<div class="buy_now_button"><a href="subpage.html">Buy Now</a></div>';
+                            finalContent += '<div class="buy_now_button"><a href="#" onClick="showBuyDialog(' + elementt.id + ')">Buy Now</a></div>';
                             finalContent += '<div class="detail_button"><a href="#" onClick="loadDetailContent(' + elementt.id + ')">Detail</a></div>';
                             finalContent += '</div>';
                             finalContent += '<div class="cleaner">&nbsp;</div>';
@@ -163,9 +170,9 @@
                     $.ajax({
                         type: 'post',
                         url: '<%=request.getContextPath()%>/ServletBuku',
-                        data: {view: 'VIEW_BY_FILTER', page:page, filter:$('#searchKey').val(), key:$('#keySearchInput').val() },
+                        data: {view: 'VIEW_BY_FILTER', page: page, filter: $('#searchKey').val(), key: $('#keySearchInput').val()},
                         success: function (data) {
-                            
+
                         }
                     });
                 });
@@ -193,6 +200,29 @@
                         finalContent += '<div class="cleaner_with_height">&nbsp;</div>';
 //                        });
                         $('#main_content').html(finalContent);
+                    }
+                });
+            }
+
+            function showBuyDialog(id) {
+                idBuy = id;
+                $.get("buy.html", function (data) {
+                    $('#main_content').html(data);
+                });
+            }
+
+            function buyProcess() {
+//                alert(idBuy);
+                var username = $('#buy_username').val();
+                var password = $('#buy_password').val();
+                var noKartuKredit = $('#buy_no_kartu_kredit').val();
+                alert(username + ' ' + password + ' ' + noKartuKredit);
+                $.ajax({
+                    type: 'post',
+                    url: '<%=request.getContextPath()%>/ServletBuy',
+                    data: {username : username, password : password, noKartuKredit : noKartuKredit, id : idBuy},
+                    success: function (data) {
+                        alert(data);
                     }
                 });
             }
@@ -291,7 +321,11 @@
                 <a href="#" class='linkSearch'>Search</a> | 
                 <a href="#" class='linkContact'>Contact</a><br />
                 Copyright © 2024 <a href="#"><strong>E Commerce - LAW</strong></a> 
-            </div> 
+            </div>
+
+            <div id="dialog">
+
+            </div>
         </div>
     </body>
 </html>
