@@ -216,13 +216,16 @@
                 var username = $('#buy_username').val();
                 var password = $('#buy_password').val();
                 var noKartuKredit = $('#buy_no_kartu_kredit').val();
-                alert(username + ' ' + password + ' ' + noKartuKredit);
+                //alert(username + ' ' + password + ' ' + noKartuKredit);
                 $.ajax({
                     type: 'post',
                     url: '<%=request.getContextPath()%>/ServletBuy',
                     data: {username : username, password : password, noKartuKredit : noKartuKredit, id : idBuy},
                     success: function (data) {
                         alert(data);
+                        if (data == 'SUCCESS') {
+                            loadHomeContent(1);
+                        }
                     }
                 });
             }
