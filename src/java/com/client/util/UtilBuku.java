@@ -47,17 +47,18 @@ public class UtilBuku {
 
     public List<TblBuku> getAllBukuNew() {
         UtilDatabase.getInstance().openConnection();
-        Query q = UtilDatabase.getInstance().getEntityManager().createQuery("SELECT T FROM TblBuku T ORDER BY T.createdDate DESC");
+        EntityManager em = UtilDatabase.getInstance().getEntityManager();
+        em.getEntityManagerFactory().getCache().evict(TblBuku.class);
+        Query q = em.createQuery("SELECT T FROM TblBuku T ORDER BY T.createdDate DESC");
         q.setFirstResult(0);
         q.setMaxResults(UtilVariables.TOTAL_SHOW_DATA_NEW);
         List<TblBuku> buku = q.getResultList();
-        UtilDatabase.getInstance().getEntityManager().close();
         return buku;
     }
 
     public TblNews getSpecialOffer() {
         UtilDatabase.getInstance().openConnection();
-        Query q = UtilDatabase.getInstance().getEntityManager().createQuery("SELECT T FROM TblNews T ORDER BY T.createdDate DESC");
+        Query q = UtilDatabase.getInstance().getEntityManager().createQuery("SELECT T FROM TblNews T WHERE T.isValid = 1 ORDER BY T.createdDate DESC");
         q.setFirstResult(0);
         q.setMaxResults(1);
         List<TblNews> news = q.getResultList();
