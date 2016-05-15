@@ -36,10 +36,6 @@
                     });
                 });
 
-                $('#linkShowSpecialOffer').click(function () {
-                    alert('special offer');
-                });
-
                 loadHomeContent(1);
             });
 
@@ -78,7 +74,7 @@
                         $.each(element, function (indexx, elementt) {
                             finalContent += '<div class="templatemo_product_box">';
                             finalContent += '<h1>' + elementt.nama + '  <span>(' + elementt.penulis + ')</span></h1>';
-                            finalContent += '<img src="images/templatemo_image_01.jpg" alt="image" />';
+                            finalContent += '<img src="' + elementt.imagePath + '" alt="image" />';
                             finalContent += '<div class="product_info">';
                             finalContent += '<p>' + elementt.deskripsi + '</p>';
                             finalContent += '<h3>' + elementt.harga.toLocaleString('en-US', {style: 'currency', currency: 'IDR'}) + '</h3>';
@@ -188,7 +184,7 @@
                         var finalContent = '';
 //                        $.each(data, function(index, element){
                         finalContent += '<h1>' + data.nama + ' <span>(by ' + data.penulis + ')</span></h1>';
-                        finalContent += '<div class="image_panel"><img src="images/templatemo_image_02.jpg" alt="CSS Template" width="100" height="150" /></div>';
+                        finalContent += '<div class="image_panel"><img src="' + data.imagePath + '" alt="CSS Template" width="100" height="150" /></div>';
                         finalContent += '<h2>' + data.deskripsi + '</h2>';
                         finalContent += '<ul>';
                         finalContent += '<li>By Deke <a href="#">McClelland</a></li>';
@@ -220,7 +216,7 @@
                 $.ajax({
                     type: 'post',
                     url: '<%=request.getContextPath()%>/ServletBuy',
-                    data: {username : username, password : password, noKartuKredit : noKartuKredit, id : idBuy},
+                    data: {username: username, password: password, noKartuKredit: noKartuKredit, id: idBuy},
                     success: function (data) {
                         alert(data);
                         if (data == 'SUCCESS') {
@@ -228,6 +224,12 @@
                         }
                     }
                 });
+            }
+
+            function showSpecialOffer(detailOffer) {
+                // alert('masuk');
+                var divImage = '<img src="' + detailOffer + '" alt="Promo">';
+                $('#main_content').html(divImage);
             }
         </script>
     </head>
@@ -238,7 +240,7 @@
                 <ul>
                     <li><a class='linkHome' href="#" class="current">Home</a></li>
                     <li><a class='linkAbout' href="#">About</a></li> 
-                    <li><a class='linkSearch' href="#">Search</a></li>
+                    <!--<li><a class='linkSearch' href="#">Search</a></li>-->
                     <li><a class='linkContact' href="#">Contact</a></li>
                 </ul>
             </div> <!-- end of menu -->
@@ -253,7 +255,9 @@
                         <!--                        <span>25%</span> discounts for
                                                 purchase over $80-->
                     </p>
-                    <a href="#" id='linkShowSpecialOffer' style="margin-left: 50px;">Read more...</a>
+                    <%
+                        out.println("<a href='#' style='margin - left: 50px;' onClick='showSpecialOffer(\"" + specialOffer.getImagePath() + "\")'>Read more...</a>");
+                    %>
                 </div>
 
                 <div id="templatemo_new_books">
@@ -321,7 +325,7 @@
             <div id="templatemo_footer">
                 <a href="#" class='linkHome'>Home</a> | 
                 <a href="#" class='linkAbout'>About</a> | 
-                <a href="#" class='linkSearch'>Search</a> | 
+                <!--<a href="#" class='linkSearch'>Search</a> |--> 
                 <a href="#" class='linkContact'>Contact</a><br />
                 Copyright © 2024 <a href="#"><strong>E Commerce - LAW</strong></a> 
             </div>
