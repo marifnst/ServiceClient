@@ -42,34 +42,25 @@ public class TblNews implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID")
     private Integer id;
-    @Basic(optional = false)
     @Column(name = "DESCRIPTION")
     private String description;
-    @Basic(optional = false)
     @Lob
     @Column(name = "DETAIL_DESCRIPTION")
     private String detailDescription;
-    @Basic(optional = false)
     @Column(name = "CREATED_DATE")
     @Temporal(TemporalType.DATE)
     private Date createdDate;
-    @Basic(optional = false)
     @Column(name = "IS_VALID")
-    private int isValid;
+    private Integer isValid;
+    @Lob
+    @Column(name = "IMAGE_PATH")
+    private String imagePath;
 
     public TblNews() {
     }
 
     public TblNews(Integer id) {
         this.id = id;
-    }
-
-    public TblNews(Integer id, String description, String detailDescription, Date createdDate, int isValid) {
-        this.id = id;
-        this.description = description;
-        this.detailDescription = detailDescription;
-        this.createdDate = createdDate;
-        this.isValid = isValid;
     }
 
     public Integer getId() {
@@ -104,12 +95,20 @@ public class TblNews implements Serializable {
         this.createdDate = createdDate;
     }
 
-    public int getIsValid() {
+    public Integer getIsValid() {
         return isValid;
     }
 
-    public void setIsValid(int isValid) {
+    public void setIsValid(Integer isValid) {
         this.isValid = isValid;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
     @Override
